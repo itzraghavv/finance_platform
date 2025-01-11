@@ -1,10 +1,9 @@
-import { Button } from "@/components/ui/button";
-
+import { UserButton } from "@clerk/nextjs"
 
 export default function Home() {
   return (
     <div>
-      This is only visible to signin users
+      <UserButton afterSignOutUrl="/"/>
     </div>
   )
 }
