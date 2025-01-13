@@ -7,3 +7,5 @@ export default function Home() {
     </div>
   )
 }
+
+// 42.18 hono setup

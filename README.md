@@ -1,6 +1,8 @@
-Technologies used - 
+## Technologies used - 
 Next.js
 shadcn/ui(https://ui.shadcn.com/)
+clerk()
+Hono js
 
 
 
