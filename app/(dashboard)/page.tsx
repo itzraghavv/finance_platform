@@ -3,9 +3,7 @@ import { UserButton } from "@clerk/nextjs"
 export default function Home() {
   return (
     <div>
-      <UserButton afterSignOutUrl="/"/>
+      this is dashpage
     </div>
   )
 }
-
-// 42.18 hono setup
