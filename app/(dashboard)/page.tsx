@@ -1,9 +1,5 @@
-import { UserButton } from "@clerk/nextjs"
+"use client";
 
 export default function Home() {
-  return (
-    <div>
-      this is dashpage
-    </div>
-  )
+  return <div>Home Page</div>;
 }
