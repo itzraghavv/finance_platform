@@ -6,6 +6,7 @@ import { accounts, insertAccountSchema } from "@/db/schema";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
 import { eq, and, inArray } from "drizzle-orm";
+import { error } from "console";
 
 const app = new Hono()
   .get("/", clerkMiddleware(), async (c) => {
@@ -25,6 +26,42 @@ const app = new Hono()
 
     return c.json({ data });
   })
+  .get(
+    "/:id",
+    zValidator(
+      "param",
+      z.object({
+        id: z.string().optional(),
+      })
+    ),
+    clerkMiddleware(),
+    async (c) => {
+      const auth = getAuth(c);
+      const { id } = c.req.valid("param");
+
+      if (!id) {
+        return c.json({ error: "Missing Id" }, 400);
+      }
+
+      if (!auth?.userId) {
+        return c.json({ error: "Unauthorize" }, 401);
+      }
+
+      const [data] = await db
+        .select({
+          id: accounts.id,
+          name: accounts.name,
+        })
+        .from(accounts)
+        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)));
+
+      if (!data) {
+        return c.json({ error: "Data not found" }, 404);
+      }
+
+      return c.json({ data });
+    }
+  )
   .post(
     "/",
     clerkMiddleware(),
