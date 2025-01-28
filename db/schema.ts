@@ -10,7 +10,7 @@ export const accounts = pgTable("accounts", {
   userId: text("user_id").notNull(),
 });
 
-const accountsRelations = relations(accounts, ({ many }) => ({
+export const accountsRelations = relations(accounts, ({ many }) => ({
   transactions: many(transactions),
 }));
 
@@ -23,7 +23,7 @@ export const categories = pgTable("categories", {
   userId: text("user_id").notNull(),
 });
 
-const categoryRelations = relations(categories, ({ many }) => ({
+export const categoryRelations = relations(categories, ({ many }) => ({
   transactions: many(transactions),
 }));
 
