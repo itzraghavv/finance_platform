@@ -14,6 +14,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
+import { Select } from "@/components/select";
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -25,8 +26,8 @@ const formSchema = z.object({
 });
 
 const apiSchema = insertTransactionsSchema.omit({
-  id: true;
-})
+  id: true,
+});
 
 type FormValues = z.input<typeof formSchema>;
 type ApiFormValues = z.input<typeof apiSchema>;
@@ -37,8 +38,8 @@ type Props = {
   onSubmit: (values: ApiFormValues) => void;
   onDelete?: () => void;
   disabled?: boolean;
-  accountOption: { label: string, value: string; } [];
-  categoryOption: {label: string, value: string;} [];
+  accountOption: { label: string; value: string }[];
+  categoryOption: { label: string; value: string }[];
   onCreateCategory: (name: string) => void;
   onCreateAccount: (name: string) => void;
 };
@@ -49,6 +50,10 @@ export const TransactionForm = ({
   onSubmit,
   onDelete,
   disabled,
+  accountOption,
+  categoryOption,
+  onCreateCategory,
+  onCreateAccount,
 }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -56,7 +61,8 @@ export const TransactionForm = ({
   });
 
   const handleSubmit = (values: FormValues) => {
-    onSubmit(values);
+    // onSubmit(values);
+    console.log(values);
   };
 
   const handleDelete = () => {
@@ -70,17 +76,20 @@ export const TransactionForm = ({
         className="space-y-4 pt-4"
       >
         <FormField
-          name="name"
+          name="accountId"
           control={form.control}
           render={({ field }) => (
             <FormItem>
               <FormLabel>
                 Name
                 <FormControl>
-                  <Input
+                  <Select
+                    placeholder="Select an Account"
+                    options={accountOption}
+                    onCreate={onCreateAccount}
+                    value={field.value}
+                    onChange={field.onChange}
                     disabled={disabled}
-                    placeholder="e.g. Card, Cash, Bank"
-                    {...field}
                   />
                 </FormControl>
               </FormLabel>
