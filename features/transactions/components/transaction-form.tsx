@@ -1,11 +1,10 @@
 import { z } from "zod";
 import { insertAccountSchema, insertTransactionsSchema } from "@/db/schema";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormMessage,
@@ -14,7 +13,9 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import { Select } from "@/components/select";
+import { DatePicker } from "@/components/date-picker";
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -40,8 +41,8 @@ type Props = {
   disabled?: boolean;
   accountOption: { label: string; value: string }[];
   categoryOption: { label: string; value: string }[];
-  onCreateCategory: (name: string) => void;
   onCreateAccount: (name: string) => void;
+  onCreateCategory: (name: string) => void;
 };
 
 export const TransactionForm = ({
@@ -76,6 +77,21 @@ export const TransactionForm = ({
         className="space-y-4 pt-4"
       >
         <FormField
+          name="date"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <DatePicker
+                  value={field.value}
+                  onChange={field.onChange}
+                  disabled={disabled}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
           name="accountId"
           control={form.control}
           render={({ field }) => (
@@ -109,6 +125,42 @@ export const TransactionForm = ({
           >
             <Trash className="size-4 mr-2" />
             Delete Account
+          </Button>
+        )}
+        <FormField
+          name="categoryId"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Name
+                <FormControl>
+                  <Select
+                    placeholder="Select an Category"
+                    options={categoryOption}
+                    onCreate={onCreateCategory}
+                    value={field.value}
+                    onChange={field.onChange}
+                    disabled={disabled}
+                  />
+                </FormControl>
+              </FormLabel>
+            </FormItem>
+          )}
+        />
+        <Button className="w-full" disabled={disabled}>
+          {id ? "Save changes" : "Create Category"}
+        </Button>
+        {!!id && (
+          <Button
+            onClick={handleDelete}
+            className="w-full"
+            variant="outline"
+            type="button"
+            disabled={disabled}
+          >
+            <Trash className="size-4 mr-2" />
+            Delete Category
           </Button>
         )}
       </form>
