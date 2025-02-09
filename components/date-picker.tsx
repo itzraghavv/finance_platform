@@ -19,6 +19,8 @@ type Props = {
 };
 
 export const DatePicker = ({ value, onChange, disabled }: Props) => {
+  const dateValue =
+    value instanceof Date && !isNaN(value.getTime()) ? value : undefined;
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -46,3 +48,5 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
     </Popover>
   );
 };
+
+// TODO- debug the calendar it is unable to select the date
