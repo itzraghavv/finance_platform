@@ -19,8 +19,6 @@ type Props = {
 };
 
 export const DatePicker = ({ value, onChange, disabled }: Props) => {
-  const dateValue =
-    value instanceof Date && !isNaN(value.getTime()) ? value : undefined;
   return (
     <Popover>
       <PopoverTrigger asChild>

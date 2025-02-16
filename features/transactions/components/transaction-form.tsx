@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { insertAccountSchema, insertTransactionsSchema } from "@/db/schema";
+import { insertTransactionsSchema } from "@/db/schema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import { Select } from "@/components/select";
 import { DatePicker } from "@/components/date-picker";
 import { AmountInput } from "@/components/amount-input";
-import { parse } from "path";
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -62,16 +61,17 @@ export const TransactionForm = ({
 }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues,
+    defaultValues,
   });
 
   const handleSubmit = (values: FormValues) => {
     const amount = parseFloat(values.amount).toLocaleString();
+    console.log(amount);
     onSubmit({
       ...values,
       amount: amount,
     });
-  };  
+  };
 
   const handleDelete = () => {
     onDelete?.();
@@ -83,7 +83,7 @@ export const TransactionForm = ({
         onSubmit={form.handleSubmit(handleSubmit)}
         className="space-y-4 pt-4"
       >
-        <FormField
+        {/* <FormField
           name="date"
           control={form.control}
           render={({ field }) => (
@@ -97,7 +97,7 @@ export const TransactionForm = ({
               </FormControl>
             </FormItem>
           )}
-        />
+        /> */}
         <FormField
           name="accountId"
           control={form.control}

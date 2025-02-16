@@ -15,7 +15,9 @@ export const useGetTransaction = (id?: string) => {
       }
 
       const { data } = await res.json();
-      return data;
+      return {
+        ...data,
+      };
     },
   });
   return query;
