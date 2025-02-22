@@ -1,6 +1,5 @@
 "use client";
 
-import { boolean } from "drizzle-orm/mysql-core";
 import { useMemo } from "react";
 import { SingleValue } from "react-select";
 import CreatableSelect from "react-select/creatable";
@@ -8,7 +7,7 @@ import CreatableSelect from "react-select/creatable";
 type Props = {
   onChange: (value?: string) => void;
   onCreate?: (value: string) => void;
-  options?: { label: "string"; value: "string" }[];
+  options?: { label: string; value: string }[];
   value?: string | null | undefined;
   disabled?: boolean;
   placeholder?: string;
@@ -17,13 +16,13 @@ type Props = {
 export const Select = ({
   onChange,
   onCreate,
-  options,
+  options = [],
   value,
   disabled,
   placeholder,
 }: Props) => {
-  const onSelect = (options: SingleValue<{ label: string; value: string }>) => {
-    onChange(options?.value);
+  const onSelect = (option: SingleValue<{ label: string; value: string }>) => {
+    onChange(option?.value);
   };
 
   const formattedValue = useMemo(() => {
