@@ -104,7 +104,29 @@ export const TransactionForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Name
+                Account
+                <FormControl>
+                  <Select
+                    placeholder="Select an Account"
+                    options={accountOption}
+                    onCreate={onCreateAccount}
+                    value={field.value}
+                    onChange={field.onChange}
+                    disabled={disabled}
+                  />
+                </FormControl>
+              </FormLabel>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="categoryId"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Category
                 <FormControl>
                   <Select
                     placeholder="Select an Account"
