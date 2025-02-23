@@ -1,11 +1,16 @@
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Trash } from "lucide-react";
+
 import { insertAccountSchema, insertTransactionsSchema } from "@/db/schema";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Trash } from "lucide-react";
+import { convertAmountToMiliunits } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { DatePicker } from "@/components/date-picker";
+import { AmountInput } from "@/components/amount-input";
 import {
   Form,
   FormMessage,
@@ -61,8 +66,13 @@ export const TransactionForm = ({
   });
 
   const handleSubmit = (values: FormValues) => {
-    // onSubmit(values);
-    console.log(values);
+    const amount = parseFloat(values.amount);
+    const amountInMiliunits = convertAmountToMiliunits(amount);
+
+    onSubmit({
+      ...values,
+      amount: amountInMiliunits,
+    });
   };
 
   const handleDelete = () => {
@@ -75,6 +85,22 @@ export const TransactionForm = ({
         onSubmit={form.handleSubmit(handleSubmit)}
         className="space-y-4 pt-4"
       >
+        <FormField
+          name="date"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <DatePicker
+                  onChange={field.onChange}
+                  value={field.value}
+                  disabled={disabled}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
         <FormField
           name="accountId"
           control={form.control}
@@ -106,9 +132,9 @@ export const TransactionForm = ({
                 Category
                 <FormControl>
                   <Select
-                    placeholder="Select an Account"
-                    options={accountOption}
-                    onCreate={onCreateAccount}
+                    placeholder="Select a Category"
+                    options={categoryOption}
+                    onCreate={onCreateCategory}
                     value={field.value}
                     onChange={field.onChange}
                     disabled={disabled}
@@ -118,8 +144,66 @@ export const TransactionForm = ({
             </FormItem>
           )}
         />
+
+        <FormField
+          name="payee"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Payee
+                <FormControl>
+                  <Input
+                    placeholder="Add a payee"
+                    disabled={disabled}
+                    {...field}
+                  />
+                </FormControl>
+              </FormLabel>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="amount"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Amount
+                <FormControl>
+                  <AmountInput
+                    {...field}
+                    disabled={disabled}
+                    placeholder="0.00 "
+                  />
+                </FormControl>
+              </FormLabel>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="notes"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Notes
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    value={field.value ?? ""}
+                    disabled={disabled}
+                    placeholder="Optional notes"
+                  />
+                </FormControl>
+              </FormLabel>
+            </FormItem>
+          )}
+        />
         <Button className="w-full" disabled={disabled}>
-          {id ? "Save changes" : "Create Account"}
+          {id ? "Save changes" : "Create Transaction"}
         </Button>
         {!!id && (
           <Button
@@ -130,7 +214,7 @@ export const TransactionForm = ({
             disabled={disabled}
           >
             <Trash className="size-4 mr-2" />
-            Delete Account
+            Delete Transaction
           </Button>
         )}
       </form>
