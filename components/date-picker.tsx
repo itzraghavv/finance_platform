@@ -41,10 +41,9 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
           onSelect={onChange}
           disabled={disabled}
           initialFocus
+          style={{ pointerEvents: "auto" }}
         />
       </PopoverContent>
     </Popover>
   );
 };
-
-// TODO- debug the calendar it is unable to select the date

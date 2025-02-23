@@ -65,8 +65,8 @@ export const TransactionForm = ({
   });
 
   const handleSubmit = (values: FormValues) => {
-    const amount = parseFloat(values.amount).toLocaleString();
-    console.log(amount);
+    const amount = values.amount.replace(/,/g, "");
+    console.log(typeof(amount));
     onSubmit({
       ...values,
       amount: amount,
@@ -83,7 +83,7 @@ export const TransactionForm = ({
         onSubmit={form.handleSubmit(handleSubmit)}
         className="space-y-4 pt-4"
       >
-        {/* <FormField
+        <FormField
           name="date"
           control={form.control}
           render={({ field }) => (
@@ -97,7 +97,7 @@ export const TransactionForm = ({
               </FormControl>
             </FormItem>
           )}
-        /> */}
+        />
         <FormField
           name="accountId"
           control={form.control}

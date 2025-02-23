@@ -8,7 +8,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { is } from "drizzle-orm";
 
 type Props = {
   value: string;
