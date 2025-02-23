@@ -39,7 +39,11 @@
     "next": "15.1.4",
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
+<<<<<<< HEAD
     "react-currency-input-field": "^3.10.0",
+=======
+    "react-currency-input-field": "^3.9.0",
+>>>>>>> 1b89a0a0cad5f6de9778df8f0589c95b5e495215
     "react-day-picker": "^8.10.1",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
