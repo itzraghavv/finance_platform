@@ -19,12 +19,7 @@ type Props = {
 };
 
 export const DatePicker = ({ value, onChange, disabled }: Props) => {
-<<<<<<< HEAD
   
-=======
-  const dateValue =
-    value instanceof Date && !isNaN(value.getTime()) ? value : undefined;
->>>>>>> 1b89a0a0cad5f6de9778df8f0589c95b5e495215
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -32,7 +27,6 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
           disabled={disabled}
           variant="outline"
           className={cn(
-<<<<<<< HEAD
             "w-full justify-start text-left font-normal ",
             !value && "text-muted-foreground"
           )}
@@ -42,17 +36,6 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent style={{ pointerEvents: "auto" }}>
-=======
-            "w-full justify-start font-normal text-left",
-            !value && "text-muted-foreground"
-          )}
-        >
-          <CalendarIcon className="size-4 mr-2" />
-          {value ? format(value, "PPP") : <span>Pick a Date</span>}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent>
->>>>>>> 1b89a0a0cad5f6de9778df8f0589c95b5e495215
         <Calendar
           mode="single"
           selected={value}
@@ -64,8 +47,3 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
     </Popover>
   );
 };
-<<<<<<< HEAD
-=======
-
-// TODO- debug the calendar it is unable to select the date
->>>>>>> 1b89a0a0cad5f6de9778df8f0589c95b5e495215
