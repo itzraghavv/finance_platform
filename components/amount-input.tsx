@@ -10,11 +10,13 @@ import {
 } from "@/components/ui/tooltip";
 import { isCancelledError } from "@tanstack/react-query";
 
+
 type Props = {
   value: string;
   onChange: (value: string | undefined) => void;
   placeholder?: string;
   disabled?: boolean;
+
 };
 
 export const AmountInput = ({
@@ -32,6 +34,7 @@ export const AmountInput = ({
 
     const newValue = parseFloat(value) * -1;
     onChange(newValue.toString());
+
   };
 
   return (
@@ -55,6 +58,7 @@ export const AmountInput = ({
           </TooltipTrigger>
           <TooltipContent>
             Use [+] for income and [-] for expenses
+
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

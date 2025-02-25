@@ -18,6 +18,7 @@ export const useGetTransaction = (id?: string) => {
       const { data } = await res.json();
       return {
         ...data,
+
         amount: convertAmountFromMiliunits(data.amount),
       };
     },
