@@ -14,7 +14,7 @@ export const useDeleteCategory = (id?: string) => {
   const mutation = useMutation<ResponseType, Error>({
     mutationFn: async () => {
       const response = await client.api.categories[":id"]["$delete"]({
-        param: { id }
+        param: { id },
       });
       return await response.json();
     },
@@ -22,6 +22,7 @@ export const useDeleteCategory = (id?: string) => {
       toast.success("Category Deleted!");
       queryClient.invalidateQueries({ queryKey: ["category", { id }] });
       queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
     onError: () => {
       toast.error("Failed to delete category");

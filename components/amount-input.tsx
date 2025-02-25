@@ -8,29 +8,33 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { isCancelledError } from "@tanstack/react-query";
+
 
 type Props = {
   value: string;
   onChange: (value: string | undefined) => void;
-  disabled?: boolean;
   placeholder?: string;
+  disabled?: boolean;
+
 };
 
 export const AmountInput = ({
   value,
   onChange,
-  disabled,
   placeholder,
+  disabled,
 }: Props) => {
-  const parseValue = parseFloat(value);
-  const isIncome = parseValue > 0;
-  const isExpense = parseValue < 0;
+  const parsedValue = parseFloat(value);
+  const isIncome = parsedValue > 0;
+  const isExpense = parsedValue < 0;
 
   const onReverseValue = () => {
-    if (!value) {
-      const newValue = parseFloat(value) * -1;
-      onChange(newValue.toString());
-    }
+    if (!value) return;
+
+    const newValue = parseFloat(value) * -1;
+    onChange(newValue.toString());
+
   };
 
   return (
@@ -47,18 +51,19 @@ export const AmountInput = ({
                 isExpense && "bg-rose-500 hover:bg-rose-600"
               )}
             >
-              {!parseValue && <Info className="text-white size-3" />}
-              {isIncome && <PlusCircle className="text-white size-3" />}
-              {isExpense && <MinusCircle className="text-white size-3" />}
+              {!parsedValue && <Info className="size-3 text-white" />}
+              {isIncome && <PlusCircle className="size-3 text-white" />}
+              {isExpense && <MinusCircle className="size-3 text-white" />}
             </button>
           </TooltipTrigger>
           <TooltipContent>
-            Use [+] for income and [-] for expense
+            Use [+] for income and [-] for expenses
+
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
       <CurrencyInput
-        prefix="₹"
+        prefix="$"
         className="pl-10 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
         placeholder={placeholder}
         value={value}

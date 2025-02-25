@@ -12,8 +12,6 @@ import {
   categories,
   accounts,
 } from "@/db/schema";
-import { getDefaultAutoSelectFamily } from "net";
-import { json } from "stream/consumers";
 
 const app = new Hono()
   .get(
@@ -97,11 +95,11 @@ const app = new Hono()
         .select({
           id: transactions.id,
           date: transactions.date,
-          categoryId: categories.id,
+          accountId: transactions.accountId,
+          categoryId: transactions.categoryId,
           payee: transactions.payee,
           amount: transactions.amount,
           notes: transactions.notes,
-          accountId: accounts.id,
         })
         .from(transactions)
         .innerJoin(accounts, eq(transactions.accountId, accounts.id))
