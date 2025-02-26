@@ -1,14 +1,10 @@
 import { z } from "zod";
 
-
-import { insertTransactionsSchema } from "@/db/schema";
-
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
 
-import { insertAccountSchema, insertTransactionsSchema } from "@/db/schema";
+import { insertTransactionsSchema } from "@/db/schema";
 
 import { convertAmountToMiliunits } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -26,10 +22,8 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
+
 import { Select } from "@/components/select";
-import { DatePicker } from "@/components/date-picker";
-import { AmountInput } from "@/components/amount-input";
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -236,4 +230,5 @@ export const TransactionForm = ({
       </form>
     </Form>
   );
-};
+}
+}
