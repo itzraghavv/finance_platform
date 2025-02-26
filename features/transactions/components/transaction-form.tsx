@@ -1,4 +1,9 @@
 import { z } from "zod";
+
+
+import { insertTransactionsSchema } from "@/db/schema";
+
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
@@ -8,9 +13,11 @@ import { insertAccountSchema, insertTransactionsSchema } from "@/db/schema";
 import { convertAmountToMiliunits } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/date-picker";
 import { AmountInput } from "@/components/amount-input";
+
 import {
   Form,
   FormMessage,
@@ -19,7 +26,10 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import { Select } from "@/components/select";
+import { DatePicker } from "@/components/date-picker";
+import { AmountInput } from "@/components/amount-input";
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -45,8 +55,8 @@ type Props = {
   disabled?: boolean;
   accountOption: { label: string; value: string }[];
   categoryOption: { label: string; value: string }[];
-  onCreateCategory: (name: string) => void;
   onCreateAccount: (name: string) => void;
+  onCreateCategory: (name: string) => void;
 };
 
 export const TransactionForm = ({
@@ -62,17 +72,17 @@ export const TransactionForm = ({
 }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues,
+    defaultValues,
   });
 
   const handleSubmit = (values: FormValues) => {
+
     const amount = parseFloat(values.amount);
     const amountInMiliunits = convertAmountToMiliunits(amount);
 
     onSubmit({
       ...values,
       amount: amountInMiliunits,
-    });
   };
 
   const handleDelete = () => {
@@ -92,15 +102,16 @@ export const TransactionForm = ({
             <FormItem>
               <FormControl>
                 <DatePicker
+
                   onChange={field.onChange}
                   value={field.value}
+
                   disabled={disabled}
                 />
               </FormControl>
             </FormItem>
           )}
         />
-
         <FormField
           name="accountId"
           control={form.control}
@@ -146,6 +157,7 @@ export const TransactionForm = ({
         />
 
         <FormField
+
           name="payee"
           control={form.control}
           render={({ field }) => (
@@ -154,8 +166,10 @@ export const TransactionForm = ({
                 Payee
                 <FormControl>
                   <Input
+
                     placeholder="Add a payee"
                     disabled={disabled}
+
                     {...field}
                   />
                 </FormControl>
@@ -175,7 +189,9 @@ export const TransactionForm = ({
                   <AmountInput
                     {...field}
                     disabled={disabled}
+
                     placeholder="0.00 "
+
                   />
                 </FormControl>
               </FormLabel>

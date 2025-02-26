@@ -1,9 +1,12 @@
+
 import { twMerge } from "tailwind-merge";
 import { clsx, type ClassValue } from "clsx";
+
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
 
 export function convertAmountFromMiliunits(amount: number) {
   return amount / 1000;
@@ -19,4 +22,5 @@ export function formatCurrency(value: number) {
     currency: "USD",
     minimumFractionDigits: 2,
   }).format(value);
+
 }

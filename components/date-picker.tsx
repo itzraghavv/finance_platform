@@ -19,7 +19,7 @@ type Props = {
 };
 
 export const DatePicker = ({ value, onChange, disabled }: Props) => {
-  
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -27,6 +27,7 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
           disabled={disabled}
           variant="outline"
           className={cn(
+
             "w-full justify-start text-left font-normal ",
             !value && "text-muted-foreground"
           )}
@@ -36,12 +37,14 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent style={{ pointerEvents: "auto" }}>
+
         <Calendar
           mode="single"
           selected={value}
           onSelect={onChange}
           disabled={disabled}
           initialFocus
+
         />
       </PopoverContent>
     </Popover>
