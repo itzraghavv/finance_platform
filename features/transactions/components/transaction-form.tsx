@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
 
-import { insertAccountSchema, insertTransactionsSchema } from "@/db/schema";
+import { insertTransactionsSchema } from "@/db/schema";
 
 import { convertAmountToMiliunits } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
