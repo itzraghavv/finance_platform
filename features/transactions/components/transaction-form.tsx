@@ -70,165 +70,157 @@ export const TransactionForm = ({
   });
 
   const handleSubmit = (values: FormValues) => {
-
     const amount = parseFloat(values.amount);
     const amountInMiliunits = convertAmountToMiliunits(amount);
 
     onSubmit({
       ...values,
-      amount: amountInMiliunits,
-  };
+      amount: amountInMiliunits.toLocaleString(),
+    });
 
-  const handleDelete = () => {
-    onDelete?.();
-  };
+    const handleDelete = () => {
+      onDelete?.();
+    };
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="space-y-4 pt-4"
-      >
-        <FormField
-          name="date"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <DatePicker
-
-                  onChange={field.onChange}
-                  value={field.value}
-
-                  disabled={disabled}
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="accountId"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Account
+    return (
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="space-y-4 pt-4"
+        >
+          <FormField
+            name="date"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
                 <FormControl>
-                  <Select
-                    placeholder="Select an Account"
-                    options={accountOption}
-                    onCreate={onCreateAccount}
-                    value={field.value}
+                  <DatePicker
                     onChange={field.onChange}
-                    disabled={disabled}
-                  />
-                </FormControl>
-              </FormLabel>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="categoryId"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Category
-                <FormControl>
-                  <Select
-                    placeholder="Select a Category"
-                    options={categoryOption}
-                    onCreate={onCreateCategory}
                     value={field.value}
-                    onChange={field.onChange}
                     disabled={disabled}
                   />
                 </FormControl>
-              </FormLabel>
-            </FormItem>
-          )}
-        />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="accountId"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Account
+                  <FormControl>
+                    <Select
+                      placeholder="Select an Account"
+                      options={accountOption}
+                      onCreate={onCreateAccount}
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled={disabled}
+                    />
+                  </FormControl>
+                </FormLabel>
+              </FormItem>
+            )}
+          />
 
-        <FormField
+          <FormField
+            name="categoryId"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Category
+                  <FormControl>
+                    <Select
+                      placeholder="Select a Category"
+                      options={categoryOption}
+                      onCreate={onCreateCategory}
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled={disabled}
+                    />
+                  </FormControl>
+                </FormLabel>
+              </FormItem>
+            )}
+          />
 
-          name="payee"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Payee
-                <FormControl>
-                  <Input
+          <FormField
+            name="payee"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Payee
+                  <FormControl>
+                    <Input
+                      placeholder="Add a payee"
+                      disabled={disabled}
+                      {...field}
+                    />
+                  </FormControl>
+                </FormLabel>
+              </FormItem>
+            )}
+          />
 
-                    placeholder="Add a payee"
-                    disabled={disabled}
+          <FormField
+            name="amount"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Amount
+                  <FormControl>
+                    <AmountInput
+                      {...field}
+                      disabled={disabled}
+                      placeholder="0.00 "
+                    />
+                  </FormControl>
+                </FormLabel>
+              </FormItem>
+            )}
+          />
 
-                    {...field}
-                  />
-                </FormControl>
-              </FormLabel>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="amount"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Amount
-                <FormControl>
-                  <AmountInput
-                    {...field}
-                    disabled={disabled}
-
-                    placeholder="0.00 "
-
-                  />
-                </FormControl>
-              </FormLabel>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="notes"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Notes
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    value={field.value ?? ""}
-                    disabled={disabled}
-                    placeholder="Optional notes"
-                  />
-                </FormControl>
-              </FormLabel>
-            </FormItem>
-          )}
-        />
-        <Button className="w-full" disabled={disabled}>
-          {id ? "Save changes" : "Create Transaction"}
-        </Button>
-        {!!id && (
-          <Button
-            onClick={handleDelete}
-            className="w-full"
-            variant="outline"
-            type="button"
-            disabled={disabled}
-          >
-            <Trash className="size-4 mr-2" />
-            Delete Transaction
+          <FormField
+            name="notes"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Notes
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      value={field.value ?? ""}
+                      disabled={disabled}
+                      placeholder="Optional notes"
+                    />
+                  </FormControl>
+                </FormLabel>
+              </FormItem>
+            )}
+          />
+          <Button className="w-full" disabled={disabled}>
+            {id ? "Save changes" : "Create Transaction"}
           </Button>
-        )}
-      </form>
-    </Form>
-  );
-}
-}
+          {!!id && (
+            <Button
+              onClick={handleDelete}
+              className="w-full"
+              variant="outline"
+              type="button"
+              disabled={disabled}
+            >
+              <Trash className="size-4 mr-2" />
+              Delete Transaction
+            </Button>
+          )}
+        </form>
+      </Form>
+    );
+  };
+};
