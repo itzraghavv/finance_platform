@@ -1,5 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardHeader, CardContent } from "@/components/ui/card";
+import { useState } from "react";
+import { useStartTyping } from "react-use";
+import { ImportTable } from "./import-table";
 
 const dateFormat = "yyyy-MM-dd HH:mm:ss";
 const outputFormat = "yyyy-MM-dd";
@@ -17,6 +20,13 @@ type Props = {
 };
 
 export const ImportCard = ({ data, onCancel, onSubmit }: Props) => {
+  const [selectedColumns, setSelectedColumns] = useState<SelectedColumnState>(
+    {}
+  );
+
+  const headers = data[0];
+  const body = data.slice(1);
+
   return (
     <div>
       <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
@@ -31,9 +41,17 @@ export const ImportCard = ({ data, onCancel, onSubmit }: Props) => {
               </Button>
             </div>
           </CardHeader>
-          <CardContent>Hello</CardContent>
+          <CardContent>
+            <ImportTable
+              headers={headers}
+              body={body}
+              selectedColumns={selectedColumns}
+              onTableHeadSelectChange={() => {}}
+            />
+          </CardContent>
         </Card>
       </div>
     </div>
   );
 };
+// 8.10
