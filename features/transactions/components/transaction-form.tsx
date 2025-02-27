@@ -75,8 +75,9 @@ export const TransactionForm = ({
 
     onSubmit({
       ...values,
-      amount: amountInMiliunits.toLocaleString(),
+      amount: amountInMiliunits,
     });
+  }
 
     const handleDelete = () => {
       onDelete?.();
@@ -223,4 +224,3 @@ export const TransactionForm = ({
       </Form>
     );
   };
-};
