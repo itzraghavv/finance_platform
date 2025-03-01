@@ -33,7 +33,7 @@ export const useSelectAccount = (): [
     resolve: (value: string | undefined) => void;
   } | null>(null);
 
-  const selectValue = useRef<string | undefined>(""); // LOOKOUT
+  const selectValue = useRef<string | undefined>(undefined); // LOOKOUT
 
   const confirm = () =>
     new Promise((resolve, reject) => {

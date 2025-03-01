@@ -50,8 +50,8 @@ export default function TransactionsPage() {
   const createTransactions = useBulkCreateTransactions();
   const deleteTransactions = useBulkDeleteTransactions();
   const transactionsQuery = useGetTransactions();
-
   const transactions = transactionsQuery.data || [];
+
   const isDisabled =
     transactionsQuery.isLoading || deleteTransactions.isPending;
 
@@ -71,6 +71,7 @@ export default function TransactionsPage() {
 
     createTransactions.mutate(data, {
       onSuccess: () => {
+        console.log("inserted succes")
         onCancelImport();
       },
     });
