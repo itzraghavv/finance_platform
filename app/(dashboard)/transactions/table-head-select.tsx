@@ -44,7 +44,7 @@ export const TableHeadSelect = ({
           return (
             <SelectItem
               key={index}
-              value="option"
+              value={option}
               disabled={disabled}
               className="capitalize"
             >

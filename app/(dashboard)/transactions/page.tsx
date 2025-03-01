@@ -84,9 +84,13 @@ export default function TransactionsPage() {
           <CardTitle className="text-xl line-clamp-1">
             Transaction History
           </CardTitle>
-          <div className="flex items-center gap-x-2">
-            <Button onClick={newTransaction.onOpen} size="sm">
-              <Plus className="size-4 mr-2" />
+          <div className="flex flex-col gap-y-2 lg:flex-row items-center gap-x-2">
+            <Button
+              onClick={newTransaction.onOpen}
+              size="sm"
+              className="w-full lg:w-auto"
+            >
+              <Plus className="size-4 mr-2 w-f" />
               Add New
             </Button>
             <UploadButton onUpload={onUpload} />
