@@ -9,7 +9,7 @@ import { convertAmountToMiliunits } from "@/lib/utils";
 const dateFormat = "yyyy-MM-dd HH:mm:ss";
 const outputFormat = "yyyy-MM-dd";
 
-const requiredOptions = ["amount", "date", "payee"];
+const requiredOptions = ["payee", "date", "amount"];
 
 interface SelectedColumnState {
   [key: string]: string | null;
@@ -87,12 +87,14 @@ export const ImportCard = ({ data, onCancel, onSubmit }: Props) => {
         return acc;
       }, {});
     });
+    // console.log(arrayOfData);
 
     const formattedData = arrayOfData.map((item) => ({
       ...item,
       amount: convertAmountToMiliunits(parseFloat(item.amount)),
       date: format(parse(item.date, dateFormat, new Date()), outputFormat),
     }));
+    console.log({ formattedData });
     onSubmit(formattedData);
   };
 
