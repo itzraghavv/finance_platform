@@ -71,7 +71,6 @@ export default function TransactionsPage() {
 
     createTransactions.mutate(data, {
       onSuccess: () => {
-        console.log("inserted succes")
         onCancelImport();
       },
     });
