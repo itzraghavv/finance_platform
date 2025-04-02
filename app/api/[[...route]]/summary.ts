@@ -138,7 +138,7 @@ const App = new Hono().get(
           sql`(SUM(CASE WHEN ${transactions.amount} >= 0 THEN ${transactions.amount} ELSE 0 END))`.mapWith(
             Number
           ),
-        expenses:
+        expense:
           sql`(SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END))`.mapWith(
             Number
           ),
