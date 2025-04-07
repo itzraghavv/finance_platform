@@ -12,6 +12,8 @@ import { DataCard, DataCardLoading } from "./data-card";
 export const DataGrid = () => {
   const params = useSearchParams();
   const { data, isLoading } = useGetSummary();
+  console.log(data?.remainingChange);
+  console.log("data.remainingChange");
 
   const to = params.get("to") || undefined;
   const from = params.get("from") || undefined;

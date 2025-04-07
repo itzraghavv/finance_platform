@@ -27,7 +27,7 @@ export const useGetSummary = () => {
       const { data } = await res.json();
       return {
         ...data,
-        incomeAmoun: convertAmountFromMiliunits(data.incomeAmount),
+        incomeAmount: convertAmountFromMiliunits(data.incomeAmount),
         expensesAmount: convertAmountFromMiliunits(data.expensesAmount),
         remainingAmount: convertAmountFromMiliunits(data.remainingAmount),
         categories: data.categories.map((category) => ({
