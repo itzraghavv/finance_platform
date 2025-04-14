@@ -7,6 +7,7 @@ import { subDays, parse, differenceInDays } from "date-fns";
 import { and, desc, eq, gte, lt, lte, sql, sum } from "drizzle-orm";
 import { accounts, categories, transactions } from "@/db/schema";
 import { calculatePercentageChange, fillMissingDays } from "@/lib/utils";
+import { experimental_taintUniqueValue } from "react";
 
 const App = new Hono().get(
   "/",
@@ -85,16 +86,20 @@ const App = new Hono().get(
       currentPeriod.income,
       lastPeriod.income
     );
+    console.log("incomeChange");
+    console.log(incomeChange);
 
     const expensesChange = calculatePercentageChange(
       currentPeriod.expenses,
       lastPeriod.expenses
     );
+    console.log(expensesChange);
 
     const remainingChange = calculatePercentageChange(
       currentPeriod.remaining,
       lastPeriod.remaining
     );
+    console.log(remainingChange);
 
     const category = await db
       .select({
@@ -139,7 +144,7 @@ const App = new Hono().get(
             Number
           ),
         expense:
-          sql`(SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END))`.mapWith(
+          sql`(SUM(CASE WHEN ${transactions.amount} < 0 THEN ABS(${transactions.amount}) ELSE 0 END))`.mapWith(
             Number
           ),
       })

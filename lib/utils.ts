@@ -30,7 +30,9 @@ export const calculatePercentageChange = (
     return previous === current ? 0 : 100;
   }
 
-  return ((current - previous) / previous) * 100;
+  const change = ((current - previous) / Math.abs(previous)) * 100;
+
+  return change;
 };
 
 export const fillMissingDays = (
