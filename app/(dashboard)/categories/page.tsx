@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useNewCategory } from "@/features/categories/hooks/use-new-category";
 import { useGetCategories } from "@/features/categories/api/use-get-categories";
 import { useBulkDeleteCategories } from "@/features/categories/api/use-bulk-delete-categories";
+import { Suspense } from "react";
 
 export default function CategoriesPage() {
   const newCategory = useNewCategory();
@@ -38,30 +39,32 @@ export default function CategoriesPage() {
   }
 
   return (
-    <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
-      <Card className="border-none drop-shadow-sm">
-        <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">
-            Categories Page
-          </CardTitle>
-          <Button onClick={newCategory.onOpen} size="sm">
-            <Plus className="size-4 mr-2" />
-            Add New
-          </Button>
-        </CardHeader>
-        <CardContent>
-          <DataTable
-            filterKey="name"
-            columns={columns}
-            data={categories}
-            onDelete={(row) => {
-              const ids = row.map((r) => r.original.id);
-              deleteCategories.mutate({ ids });
-            }}
-            disabled={isDisabled}
-          />
-        </CardContent>
-      </Card>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
+        <Card className="border-none drop-shadow-sm">
+          <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
+            <CardTitle className="text-xl line-clamp-1">
+              Categories Page
+            </CardTitle>
+            <Button onClick={newCategory.onOpen} size="sm">
+              <Plus className="size-4 mr-2" />
+              Add New
+            </Button>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              filterKey="name"
+              columns={columns}
+              data={categories}
+              onDelete={(row) => {
+                const ids = row.map((r) => r.original.id);
+                deleteCategories.mutate({ ids });
+              }}
+              disabled={isDisabled}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    </Suspense>
   );
 }

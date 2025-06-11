@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete-accounts";
+import { Suspense } from "react";
 
 export default function AccountsPage() {
   const newAccount = useNewAccount();
@@ -38,28 +39,32 @@ export default function AccountsPage() {
   }
 
   return (
-    <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
-      <Card className="border-none drop-shadow-sm">
-        <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">Accounts Page</CardTitle>
-          <Button onClick={newAccount.onOpen} size="sm">
-            <Plus className="size-4 mr-2" />
-            Add New
-          </Button>
-        </CardHeader>
-        <CardContent>
-          <DataTable
-            filterKey="name"
-            columns={columns}
-            data={accounts}
-            onDelete={(row) => {
-              const ids = row.map((r) => r.original.id);
-              deleteAccounts.mutate({ ids });
-            }}
-            disabled={isDisabled}
-          />
-        </CardContent>
-      </Card>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
+        <Card className="border-none drop-shadow-sm">
+          <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
+            <CardTitle className="text-xl line-clamp-1">
+              Accounts Page
+            </CardTitle>
+            <Button onClick={newAccount.onOpen} size="sm">
+              <Plus className="size-4 mr-2" />
+              Add New
+            </Button>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              filterKey="name"
+              columns={columns}
+              data={accounts}
+              onDelete={(row) => {
+                const ids = row.map((r) => r.original.id);
+                deleteAccounts.mutate({ ids });
+              }}
+              disabled={isDisabled}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    </Suspense>
   );
 }

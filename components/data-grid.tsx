@@ -8,6 +8,7 @@ import { FaPiggyBank } from "react-icons/fa";
 import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 
 import { DataCard, DataCardLoading } from "./data-card";
+import { Suspense } from "react";
 
 export const DataGrid = () => {
   const params = useSearchParams();
@@ -22,11 +23,13 @@ export const DataGrid = () => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-3 pb-2 mb-8 gap-8">
-        <DataCardLoading />
-        <DataCardLoading />
-        <DataCardLoading />
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 pb-2 mb-8 gap-8">
+          <DataCardLoading />
+          <DataCardLoading />
+          <DataCardLoading />
+        </div>
+      </Suspense>
     );
   }
 

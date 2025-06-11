@@ -33,7 +33,7 @@ export const useSelectAccount = (): [
     resolve: (value: string | undefined) => void;
   } | null>(null);
 
-  const selectValue = useRef<string>(); // LOOKOUT
+  const selectValue = useRef<string>("");
 
   const confirm = () =>
     new Promise((resolve, reject) => {
@@ -67,7 +67,7 @@ export const useSelectAccount = (): [
           placeholder="Select an Account"
           options={accountOption}
           onCreate={onCreateAccount}
-          onChange={(value) => (selectValue.current = value)} // LOOKOUT
+          onChange={(value) => (selectValue.current = value!)}
           disabled={accountQuery.isLoading || accountMutation.isPending}
         />
         <DialogFooter className="pt-2">

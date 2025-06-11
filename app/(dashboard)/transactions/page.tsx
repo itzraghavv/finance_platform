@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { toast } from "sonner";
 import { Loader2, Plus } from "lucide-react";
 
@@ -107,37 +107,39 @@ export default function TransactionsPage() {
   }
 
   return (
-    <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
-      <Card className="border-none drop-shadow-sm">
-        <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">
-            Transaction History
-          </CardTitle>
-          <div className="flex flex-col gap-y-2 lg:flex-row items-center gap-x-2">
-            <Button
-              onClick={newTransaction.onOpen}
-              size="sm"
-              className="w-full lg:w-auto"
-            >
-              <Plus className="size-4 mr-2 w-f" />
-              Add New
-            </Button>
-            <UploadButton onUpload={onUpload} />
-          </div>
-        </CardHeader>
-        <CardContent>
-          <DataTable
-            filterKey="name"
-            columns={columns}
-            data={transactions}
-            onDelete={(row) => {
-              const ids = row.map((r) => r.original.id);
-              deleteTransactions.mutate({ ids });
-            }}
-            disabled={isDisabled}
-          />
-        </CardContent>
-      </Card>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
+        <Card className="border-none drop-shadow-sm">
+          <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
+            <CardTitle className="text-xl line-clamp-1">
+              Transaction History
+            </CardTitle>
+            <div className="flex flex-col gap-y-2 lg:flex-row items-center gap-x-2">
+              <Button
+                onClick={newTransaction.onOpen}
+                size="sm"
+                className="w-full lg:w-auto"
+              >
+                <Plus className="size-4 mr-2 w-f" />
+                Add New
+              </Button>
+              <UploadButton onUpload={onUpload} />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              filterKey="name"
+              columns={columns}
+              data={transactions}
+              onDelete={(row) => {
+                const ids = row.map((r) => r.original.id);
+                deleteTransactions.mutate({ ids });
+              }}
+              disabled={isDisabled}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    </Suspense>
   );
 }
